@@ -1,7 +1,5 @@
 package org.nico.emitter.client;
 
-import java.net.URISyntaxException;
-import java.util.Scanner;
 
 import org.fusesource.mqtt.client.BlockingConnection;
 import org.fusesource.mqtt.client.MQTT;
@@ -14,11 +12,13 @@ public class ClientTest {
 
     public static void main(String[] args) throws Exception {
         //keygen生成的key
-        String key = "I4Ypn8JoMSDECUxUm746DOxo_0bKHyXJ";
+        String key = "ytqiEY3DpPIfx9-vf-Z_5Od7IzxUQH7V";
         //通道
-        String channel = "nico/";
+        String publishChannel = "nico/hello/";
+        String subscribeChannel = "nico/hello/";
         //组装topic
-        String topic = key + "/" + channel;
+        String publishTopic = key + "/" + publishChannel;
+        String subscribeTopic = key + "/" + subscribeChannel;
         
         //连接emitter server
         MQTT mqtt = new MQTT();
@@ -27,34 +27,19 @@ public class ClientTest {
         connection.connect();
         
         //订阅
-        connection.subscribe(new Topic[] {new Topic(topic, QoS.AT_LEAST_ONCE)});
+        connection.subscribe(new Topic[] {new Topic(subscribeTopic, QoS.EXACTLY_ONCE)});
         //发布
-        connection.publish(topic, "hello world".getBytes(), QoS.AT_LEAST_ONCE, true);
+        
+        System.out.println(publishTopic);
+        connection.publish(publishTopic, "hello world7".getBytes(), QoS.EXACTLY_ONCE, true);
+        connection.publish(publishTopic, "hello world8".getBytes(), QoS.EXACTLY_ONCE, true);
         //接受
         Message msg = connection.receive();
         // Print it out
         System.out.println(msg.getPayloadBuffer());
         
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                Scanner in = new Scanner(System.in);
-//                while(in.hasNext()) {
-//                    try {
-//                        connection.publish(topic, in.next().getBytes(), QoS.AT_LEAST_ONCE, true);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }   
-//                }
-//            }
-//        }.start();
-//        
-//        for(int i=0; i < 10; ++i){
-//            Message msg = connection.receive();
-//            
-//            // Print it out
-//            System.out.println(msg.getPayloadBuffer());
-//        }
+        connection.receive();
+        System.out.println(msg.getPayloadBuffer());
         
         
     }
