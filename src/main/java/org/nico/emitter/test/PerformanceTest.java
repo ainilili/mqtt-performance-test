@@ -1,4 +1,4 @@
-package org.nico.emitter.client;
+package org.nico.emitter.test;
 
 
 import java.util.Scanner;

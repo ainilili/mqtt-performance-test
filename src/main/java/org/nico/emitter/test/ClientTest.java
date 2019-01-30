@@ -1,4 +1,4 @@
-package org.nico.emitter.client;
+package org.nico.emitter.test;
 
 
 import org.fusesource.mqtt.client.BlockingConnection;
@@ -12,7 +12,7 @@ public class ClientTest {
 
     public static void main(String[] args) throws Exception {
         //keygen生成的key
-        String key = "ytqiEY3DpPIfx9-vf-Z_5Od7IzxUQH7V";
+        String key = "1Nxhq58lCUgbYpMrsiSrpOtsI-40zCzN";
         //通道
         String publishChannel = "nico/hello/";
         String subscribeChannel = "nico/hello/";
@@ -31,16 +31,17 @@ public class ClientTest {
         //发布
         
         System.out.println(publishTopic);
-        connection.publish(publishTopic, "hello world7".getBytes(), QoS.EXACTLY_ONCE, true);
-        connection.publish(publishTopic, "hello world8".getBytes(), QoS.EXACTLY_ONCE, true);
+        connection.publish(publishTopic, "hello world10".getBytes(), QoS.AT_LEAST_ONCE, true);
+        connection.publish(publishTopic, "hello world11".getBytes(), QoS.AT_LEAST_ONCE, true);
         //接受
         Message msg = connection.receive();
         // Print it out
         System.out.println(msg.getPayloadBuffer());
+        msg.ack();
         
-        connection.receive();
+        msg = connection.receive();
         System.out.println(msg.getPayloadBuffer());
-        
+        msg.ack();
         
     }
 }
