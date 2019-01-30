@@ -1,14 +1,10 @@
-package org.nico.emitter.test;
+package org.nico.emitter;
 
-import java.util.HashMap;
-import java.util.Map;
 
-import com.alibaba.fastjson.JSON;
-
-public class ClientPresenceTest {
+public class ClientKeyGenTest {
 
 //    public static void main(String[] args) throws Exception {
-//        String key = "qOzeTq6Xn31fHd8honmy8YeWC6rTxAAk";
+//        String key = "vF3pqMJ9XZf3OUiB2R28vL73ljddgqQj";
 //        String channel = "nico/hello/";
 //        // Get an implementation of a blocking connection
 //        final BlockingConnection connection = Emitter.getDefault().blockingConnection();
@@ -16,11 +12,10 @@ public class ClientPresenceTest {
 //            // Connect to emitter service
 //            connection.connect();
 //
-//            Map<String, Object> map = new HashMap<String, Object>();
-//            map.put("key", key);
-//            map.put("channel", channel);
+//            KeyGenRequest req = new KeyGenRequest(key, channel, "read", 5000);
+//            System.out.println(req.toJson());
 //
-//            String resp = connection.presence(JSON.toJSONString(map));
+//            KeyGenResponse resp = connection.keygen(req);
 //
 //            System.out.println(resp);
 //

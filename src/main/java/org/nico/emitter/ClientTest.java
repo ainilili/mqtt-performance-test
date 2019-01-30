@@ -1,4 +1,4 @@
-package org.nico.emitter.test;
+package org.nico.emitter;
 
 
 import org.fusesource.mqtt.client.BlockingConnection;
