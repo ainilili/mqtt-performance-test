@@ -50,7 +50,7 @@ public class TestMqtt {
     
     @Test
     public void testMosquitto() throws URISyntaxException, InterruptedException {
-        MqttTest.test("nico1", 8999, "nico/hello/", QoS.EXACTLY_ONCE, "mosquitto",  50, 100, 60 * 10);
+        MqttTest.test("nico1", 8999, "nico/hello/", QoS.EXACTLY_ONCE, "mosquitto",  10, 5, 60 * 1);
         synchronized (this) {
             this.wait();
         }

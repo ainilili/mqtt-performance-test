@@ -33,32 +33,6 @@ public class MqttTest {
         mqtt.setPassword("admin");
         
         main.execute(() -> {
-            for(int index = 0; index < publisherCount; index ++) {
-                final int id = index;
-                publisher.execute(() -> {
-                    BlockingConnection connection = mqtt.blockingConnection();
-                    try {
-                        connection.connect();
-                        while(pflag) {
-                            sleep(5);
-                            connection.publish(topic, (name + "-" + pushCount.incrementAndGet() + "-id-" + id).getBytes(), qos, true);
-                        }
-                    }catch(Exception e) {
-                        System.out.println("Publisher Error：" + e.getMessage());
-                    }finally {
-                        try {
-                            connection.disconnect();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                });
-            }
-        });
-
-
-        main.execute(() -> {
             for(int index = 0; index < subscriberCount; index ++) {
                 subscriber.execute(() -> {
                     BlockingConnection connection = mqtt.blockingConnection();
@@ -84,6 +58,34 @@ public class MqttTest {
             }
         });
         
+        sleep(1000);
+        
+        main.execute(() -> {
+            for(int index = 0; index < publisherCount; index ++) {
+                final int id = index;
+                publisher.execute(() -> {
+                    BlockingConnection connection = mqtt.blockingConnection();
+                    try {
+                        connection.connect();
+                        while(pflag) {
+                            sleep(5);
+                            connection.publish(topic, (name + "-" + pushCount.incrementAndGet() + "-id-" + id).getBytes(), qos, true);
+                        }
+                    }catch(Exception e) {
+                        System.out.println("Publisher Error：" + e.getMessage());
+                    }finally {
+                        try {
+                            connection.disconnect();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                });
+            }
+        });
+        
+
         main.execute(() -> {
             sleep(seconds * 1000);
             pflag = false;
