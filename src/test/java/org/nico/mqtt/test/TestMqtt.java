@@ -5,12 +5,13 @@ import java.net.URISyntaxException;
 import org.fusesource.mqtt.client.QoS;
 import org.junit.Test;
 import org.nico.mqtt.MqttTest;
+import org.nico.mqtt.PahoTest;
 
 public class TestMqtt {
 
     @Test
     public void testEmitter() throws URISyntaxException, InterruptedException {
-        MqttTest.test("nico1", 8080, "Gj-UHzLwA8V865h6P2AzJhn1-_QS8zuJ/nico/hello/", QoS.EXACTLY_ONCE, "emitter", 50, 100, 60 * 10);
+        MqttTest.test("nico1", 8080, "v2oes8y55c1A_1-D-3XCOw0jgi8njvZk/nico/hello/", QoS.EXACTLY_ONCE, "emitter", 2, 100, 60 * 1);
         synchronized (this) {
             this.wait();
         }
@@ -34,7 +35,7 @@ public class TestMqtt {
     
     @Test
     public void testEMQ() throws URISyntaxException, InterruptedException {
-        MqttTest.test("nico1", 8081, "nico/hello/", QoS.EXACTLY_ONCE, "emqtt",  50, 100, 60 * 10);
+        MqttTest.test("nico1", 8081, "nico/hello/", QoS.EXACTLY_ONCE, "emqtt",  50, 100, 60 * 1);
         synchronized (this) {
             this.wait();
         }
@@ -50,9 +51,18 @@ public class TestMqtt {
     
     @Test
     public void testMosquitto() throws URISyntaxException, InterruptedException {
-        MqttTest.test("nico1", 8999, "nico/hello/", QoS.EXACTLY_ONCE, "mosquitto",  10, 5, 60 * 1);
+        MqttTest.test("nico1", 8999, "nico/hello/", QoS.EXACTLY_ONCE, "mosquitto",  10, 1000, 60 * 1);
         synchronized (this) {
             this.wait();
         }
     }
+    
+    @Test
+    public void testMosquittoPaho() throws URISyntaxException, InterruptedException {
+        PahoTest.test("tcp://nico1:8999", "nico/hello/", 2, "mosquitto",  30, 1, 60 * 1);
+        synchronized (this) {
+            this.wait();
+        }
+    }
+    
 }

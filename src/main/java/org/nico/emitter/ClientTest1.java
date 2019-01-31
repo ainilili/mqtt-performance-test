@@ -8,7 +8,7 @@ import org.fusesource.mqtt.client.QoS;
 import org.fusesource.mqtt.client.Topic;
 
 
-public class ClientTest {
+public class ClientTest1 {
 
     public static void main(String[] args) throws Exception {
         //keygen生成的key
@@ -27,16 +27,12 @@ public class ClientTest {
         connection.connect();
         
         //订阅
-//        connection.subscribe(new Topic[] {new Topic(subscribeTopic, QoS.EXACTLY_ONCE)});
-        //发布
-        
-        System.out.println(publishTopic);
-        connection.publish(publishTopic, "hello world11".getBytes(), QoS.AT_LEAST_ONCE, true);
+        connection.subscribe(new Topic[] {new Topic(subscribeTopic, QoS.EXACTLY_ONCE)});
         //接受
-//        Message msg = connection.receive();
+        Message msg = connection.receive();
         // Print it out
-//        System.out.println(msg.getPayloadBuffer());
-//        msg.ack();
+        System.out.println(msg.getPayloadBuffer());
+        msg.ack();
         
         
     }
