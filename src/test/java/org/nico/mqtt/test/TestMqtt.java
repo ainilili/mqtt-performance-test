@@ -11,7 +11,7 @@ public class TestMqtt {
 
     @Test
     public void testEmitter() throws URISyntaxException, InterruptedException {
-        MqttTest.test("nico1", 8080, "v2oes8y55c1A_1-D-3XCOw0jgi8njvZk/nico/hello/", QoS.EXACTLY_ONCE, "emitter", 2, 100, 60 * 1);
+        MqttTest.test("nico1", 8080, "OgeZTxRaxx7Bpr5wnFWKvL9Lf1S9gD2X/nico/hello/?ttl=0", QoS.EXACTLY_ONCE, "emitter", 2, 1000, 60 * 1);
         synchronized (this) {
             this.wait();
         }

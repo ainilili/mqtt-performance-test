@@ -45,7 +45,7 @@ public class MqttTest {
                     MQTT mqtt1 = new MQTT();
                     try {
                         if(name.equals("emitter")) {
-                            mqtt1.setHost(host, port - (id % 4));
+                            mqtt1.setHost(host, port - (id % 3));
                         }else {
                             mqtt1.setHost(host, port);
                         }
@@ -93,7 +93,7 @@ public class MqttTest {
                         connection.connect();
                         while(pflag) {
                             sleep(pubTime);
-                            connection.publish(topic, (name + "-" + pushCount.incrementAndGet() + "-id-" + id).getBytes(), qos, false);
+                            connection.publish(topic, (name + "-" + pushCount.incrementAndGet() + "-id-" + id).getBytes(), qos, true);
                         }
                     }catch(Exception e) {
                         System.out.println("Publisher Error：" + e.getMessage());
