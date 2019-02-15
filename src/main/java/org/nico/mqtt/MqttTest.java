@@ -45,7 +45,7 @@ public class MqttTest {
                     MQTT mqtt1 = new MQTT();
                     try {
                         if(name.equals("emitter")) {
-                            mqtt1.setHost(host, port - (id % 3));
+                            mqtt1.setHost(host, port - (id % 4));
                         }else {
                             mqtt1.setHost(host, port);
                         }
