@@ -44,8 +44,14 @@ public class MqttTest {
                 subscriber.execute(() -> {
                     MQTT mqtt1 = new MQTT();
                     try {
-                        if(name.equals("emitter")) {
-                            mqtt1.setHost(host, port - (id % 4));
+                        if(name.equals("emqtt")) {
+                            int hash = id % 3;
+                            mqtt1.setHost("nico" + (hash + 1), port);
+                        }else if(name.equals("emitter")) {
+                            mqtt1.setHost(host, port - (id % 3));
+                        }else if(name.equals("mosquitto")) {
+                            int hash = id % 3;
+                            mqtt1.setHost("nico" + (hash + 1), port);
                         }else {
                             mqtt1.setHost(host, port);
                         }
@@ -63,7 +69,7 @@ public class MqttTest {
                         while(sflag) {
                             Message msg = connection.receive();
                             receiveCount.incrementAndGet();
-                            System.out.println(pushCount.get() + " - " + receiveCount.get() + " - " + msg.getPayloadBuffer());
+                            System.out.println(pushCount.get() + " - " + receiveCount.get() + " - " + msg.getPayloadBuffer() + " -> " + id%3);
                             msg.ack();
                         }
                     }catch(Exception e) {
@@ -113,6 +119,7 @@ public class MqttTest {
         main.execute(() -> {
             sleep(seconds * 1000);
             pflag = false;
+            sflag = false;
             System.out.println("发布者关闭...");
         });
     }
